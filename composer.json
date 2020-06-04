@@ -1,0 +1,100 @@
+{
+    "name": "pantheon-systems/example-drops-8-composer",
+    "description": "Install drops-8 with Composer on Pantheon.",
+    "type": "project",
+    "license": "MIT",
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://packages.drupal.org/8"
+        },
+        {
+            "url": "https://github.com/CuBoulder/ucb2019_base.git",
+            "type": "git"
+        },
+        {
+            "url": "https://github.com/CuBoulder/ucb2020_admin.git",
+            "type": "git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/CuBoulder/d8_profile_base"
+        }
+    ],
+    "require": {
+        "php": ">=7.2.11",
+        "composer/installers": "^1.0.20",
+        "cu-boulder/ucb2019_base": "master",
+        "cu-boulder/ucb2020_admin": "master",
+        "cu-boulder/d8-profile-ucbstandard": "dev-master",
+        "cweagans/composer-patches": "^1.0",
+        "pantheon-systems/drupal-integrations": "^8",
+        "drupal/admin_toolbar": "^2.0",
+        "drupal/core-composer-scaffold": "^9",
+        "drupal/core-recommended": "^9.0.0",
+        "drupal/features": "^3.8",
+        "drupal/field_group": "^3.0-rc2",
+        "drupal/paragraphs": "^1.10",
+        "drupal/pathauto": "^1.6",
+        "drupal/simplesamlphp_auth": "^3.1",
+        "drush/drush": "^10.0",
+        "simplesamlphp/simplesamlphp": "^1.18",
+        "zaporylie/composer-drupal-optimizations": "^1.1"
+    },
+    "conflict": {
+            "drupal/drupal": "*"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "prepare-for-pantheon": "DrupalProject\\composer\\ScriptHandler::prepareForPantheon"
+    },
+    "autoload": {
+        "classmap": [
+            "scripts/composer/ScriptHandler.php"
+        ]
+    },
+
+    "extra": {
+        "enable-patching": true,
+        "installer-paths": {
+            "web/core": ["type:drupal-core"],
+            "web/libraries/{$name}": ["type:drupal-library"],
+            "web/modules/contrib/{$name}": ["type:drupal-module"],
+            "web/profiles/contrib/{$name}": ["type:drupal-profile"],
+            "web/themes/contrib/{$name}": ["type:drupal-theme"],
+            "drush/Commands/contrib/{$name}": ["type:drupal-drush"],
+            "web/private/scripts/quicksilver/{$name}/": ["type:quicksilver-script"]
+        },
+        "patches": {
+            "drupal/core": {
+                "db version": "https://raw.githubusercontent.com/stevector/drupal-9-project/master/patches/issue-2--mariadb-version.patch"
+            }
+        },
+        "composer-exit-on-patch-failure": true,
+        "patchLevel": {
+            "drupal/core": "-p2"
+        },
+        "prepare-for-pantheon": "DrupalProject\\composer\\ScriptHandler::prepareForPantheon",
+        "drupal-scaffold": {
+            "allowed-packages": [
+                "pantheon-systems/drupal-integrations"
+            ],
+            "locations": {
+                "web-root": "./web"
+            },
+            "file-mapping": {
+                "[project-root]/.editorconfig": false,
+                "[project-root]/pantheon.upstream.yml": false
+            }
+        }
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "platform": {
+            "php": "7.3"
+        }
+    }
+}
